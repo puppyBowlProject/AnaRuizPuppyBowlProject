@@ -1,9 +1,7 @@
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
-const newPlayerName = document.querySelector('#puppyName');
-const newPlayerBreed = document.querySelector('#puppyBreed');
-const newPlayerStatus = document.querySelector('#status');
-const newPlayerImage = document.querySelector('#image');
+const addButton = document.getElementById('add-button');
+
 
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
 const cohortName = '2308-ACC-ET-WEB-PT-A';
@@ -30,35 +28,42 @@ const fetchSinglePlayer = async (playerId) => {
         const response = await fetch(`${APIURL}/${playerId}`);
         const result = await response.json();
         console.log(result);
+        return result;
     } catch (err) {
         console.error(`Oh no, trouble fetching player #${playerId}!`, err);
     }
 };
 
-fetchSinglePlayer(3218);
+//Testing fetchSinglePlayer function:
+//fetchSinglePlayer(3221);
 
 const addNewPlayer = async (playerObj) => {
     try {
         newPlayerFormContainer.addEventListener('submit', async (event) => {
             event.preventDefault();
+            const newPlayerName = document.getElementById('puppyName');
+            const newPlayerBreed = document.getElementById('puppyBreed');
+            const newPlayerStatus = document.getElementById('status');
+            const newPlayerImage = document.getElementById('image');
+            const newPlayer = {
+                name: newPlayerName.value,
+                breed: newPlayerBreed.value,
+                status: newPlayerStatus.value.toString(),
+                image: newPlayerImage.value, 
+            };
             const response = await fetch(APIURL, {
                 method: `POST`,
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    name: newPlayerName.value,
-                    breed: newPlayerBreed.value,
-                    status: newPlayerStatus.value,
-                    image: newPlayerImage.value,   
-                })
+                body: JSON.stringify({...newPlayer}),
             });
-
-            newPlayerName.value = '';
-            newPlayerBreed.value = '';
-            newPlayerStatus.value = '';
-            newPlayerImage.value = '';
-
+            
+            newPlayerName.value = '',
+            newPlayerBreed.value = '',
+            newPlayerStatus.value = '',
+            newPlayerImage.value = '',
+            
             init();
         });
     } catch (err) {
@@ -66,10 +71,11 @@ const addNewPlayer = async (playerObj) => {
     }
 };
 
+addNewPlayer();
 const removePlayer = async (playerId) => {
     try {
         playerContainer.addEventListener('click', async (event) => {
-            if(event.target.matches('button')) {
+            if(event.target.matches('delete-button')) {
                 const id = event.target.dataset.id;
                 await fetch(`${APIURL}/${player.id}`, {
                     method: `DELETE`,
@@ -130,7 +136,21 @@ const renderAllPlayers = (playerList) => {
  */
 const renderNewPlayerForm = () => {
     try {
-        
+        const template = 
+            (
+               `<form action="">
+                <label for="">Puppy Name</label>
+                <input id="puppyName" type="text" name="" id="">
+                <label for="">Puppy Breed</label>
+                <input id="puppyBreed" type="text">
+                <label for="">Status</label>
+                <input id="status" type="text">
+                <label for="">Image</label>
+                <input id="image" type="text">
+                <button class="add-button">Add New Puppy</button>
+                </form>`
+            );
+            newPlayerFormContainer.innerHTML = template;
     } catch (err) {
         console.error('Uh oh, trouble rendering the new player form!', err);
     }
@@ -141,6 +161,7 @@ const init = async () => {
     renderAllPlayers(players);
 
     renderNewPlayerForm();
+    
 }
 
 init();
