@@ -1,8 +1,10 @@
+const cards = document.getElementById('cards');
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
 const addButton = document.getElementById('add-button');
-const deleteButton = document.getElementById('delete-button');
 const detailsButton = document.getElementById('details-button');
+const deleteButton = document.getElementById('delete-button')
+
 
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
 const cohortName = '2308-ACC-ET-WEB-PT-A';
@@ -74,25 +76,23 @@ const addNewPlayer = async (playerObj) => {
 
 addNewPlayer();
 
+
+ //deleteButton.addEventListener('click', removePlayer);
+
 const removePlayer = async (playerId) => {
     try {
-        playerContainer.addEventListener('click', async (event) => {
-            if(event.target.matches('.delete-button')) {
-                const id = event.target.data.players.id;
-                console.log(id);
-                await fetch(`${APIURL}/${id}`, {
-                    method: `DELETE`,
-                });
+       await fetch(`${APIURL}/${players.id}`), {
+        method: `DELETE`,
+       };
                 init();
             }
-        });
-    } catch (err) {
+     catch (err) {
         console.error(
             `Whoops, trouble removing player #${playerId} from the roster!`,
             err
         );
-    }
 };
+}
 removePlayer();
 
 /**
@@ -123,7 +123,7 @@ const renderAllPlayers = (playerList) => {
              <img class="playerImg" src="${player.imageUrl}" alt="">
              <p>${player.name}</p>
              <button>See Details</button>
-             <button data-id="${player.id}">Remove From Roster</button>
+             <button class="delete-button" data-id="${player.id}">Remove Player</button>
             </section>`
         )
         }).join('');
