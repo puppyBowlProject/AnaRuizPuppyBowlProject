@@ -1,7 +1,8 @@
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
 const addButton = document.getElementById('add-button');
-
+const deleteButton = document.getElementById('delete-button');
+const detailsButton = document.getElementById('details-button');
 
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
 const cohortName = '2308-ACC-ET-WEB-PT-A';
@@ -35,7 +36,7 @@ const fetchSinglePlayer = async (playerId) => {
 };
 
 //Testing fetchSinglePlayer function:
-//fetchSinglePlayer(3221);
+//fetchSinglePlayer(3819);
 
 const addNewPlayer = async (playerObj) => {
     try {
@@ -72,12 +73,14 @@ const addNewPlayer = async (playerObj) => {
 };
 
 addNewPlayer();
+
 const removePlayer = async (playerId) => {
     try {
         playerContainer.addEventListener('click', async (event) => {
-            if(event.target.matches('delete-button')) {
-                const id = event.target.dataset.id;
-                await fetch(`${APIURL}/${player.id}`, {
+            if(event.target.matches('.delete-button')) {
+                const id = event.target.data.players.id;
+                console.log(id);
+                await fetch(`${APIURL}/${id}`, {
                     method: `DELETE`,
                 });
                 init();
@@ -90,6 +93,7 @@ const removePlayer = async (playerId) => {
         );
     }
 };
+removePlayer();
 
 /**
  * It takes an array of player objects, loops through them, and creates a string of HTML for each
