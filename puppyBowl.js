@@ -3,7 +3,8 @@ const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
 const addButton = document.getElementById('add-button');
 const detailsButton = document.getElementById('details-button');
-const deleteButton = document.getElementById('delete-button')
+const deleteButton = document.getElementById('delete-button');
+
 
 
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
@@ -38,7 +39,9 @@ const fetchSinglePlayer = async (playerId) => {
 };
 
 //Testing fetchSinglePlayer function:
-//fetchSinglePlayer(3819);
+//fetchSinglePlayer(4497);
+
+detailsButton.addEventListener('click', fetchSinglePlayer);
 
 const addNewPlayer = async (playerObj) => {
     try {
@@ -77,23 +80,7 @@ const addNewPlayer = async (playerObj) => {
 addNewPlayer();
 
 
- //deleteButton.addEventListener('click', removePlayer);
 
-const removePlayer = async (playerId) => {
-    try {
-       await fetch(`${APIURL}/${players.id}`), {
-        method: `DELETE`,
-       };
-                init();
-            }
-     catch (err) {
-        console.error(
-            `Whoops, trouble removing player #${playerId} from the roster!`,
-            err
-        );
-};
-}
-removePlayer();
 
 /**
  * It takes an array of player objects, loops through them, and creates a string of HTML for each
@@ -122,7 +109,7 @@ const renderAllPlayers = (playerList) => {
             `<section class="cards">
              <img class="playerImg" src="${player.imageUrl}" alt="">
              <p>${player.name}</p>
-             <button>See Details</button>
+             <button class="details-button">See Details</button>
              <button class="delete-button" data-id="${player.id}">Remove Player</button>
             </section>`
         )
@@ -168,4 +155,21 @@ const init = async () => {
     
 }
 
+const removePlayer = async (playerId) => {
+    try {
+       await fetch(`${APIURL}/${players.id}`), {
+        method: `DELETE`,
+       };
+                init();
+            }
+     catch (err) {
+        console.error(
+            `Whoops, trouble removing player #${playerId} from the roster!`,
+            err
+        );
+};
+}
+
+deleteButton.addEventListener('click', removePlayer());
+fs
 init();
