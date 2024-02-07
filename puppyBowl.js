@@ -85,7 +85,7 @@ const renderSinglePlayer = (player) => {
            `<div class="puppy-details">
             <button class="close">X</button>
             <h2>${player.name}</h2>
-            <img src="${player.imageUrl}" height="60%" width="30%" alt="">
+            <img src="${player.imageUrl}" height="70%" width="50%" alt="">
             <p>${player.breed}</p>
             <p>${player.status}</p>`
         );
@@ -123,7 +123,7 @@ const removePlayer = async (playerId) => {
             method: 'DELETE',
         });
         const data = await response.json();
-        console.log(data.data.player.id);
+        //console.log(data.data.player.id);
         init();
             }
      catch (err) {

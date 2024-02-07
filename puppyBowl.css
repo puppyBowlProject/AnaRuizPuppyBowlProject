@@ -14,11 +14,23 @@
   padding: 16px;
   border-radius: 10px;
   text-align: center;
+  font-size: larger;
   width: 40%;
 }
 
+p {
+  font-size: larger;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: xx-large;
+  font-weight: 600;
+}
+
 .playerImg {
-  width: 60%;
+  width: 70%;
+  border-radius: 10px;
 }
 
 .puppy-details {
@@ -27,4 +39,18 @@
   font-size: x-large;
   font-weight: 300;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+button:hover {
+  border-color: #646cff;
 }
