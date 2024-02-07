@@ -2,7 +2,7 @@ const cards = document.querySelector('.cards');
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
 const addButton = document.getElementById('add-button');
-
+const closeButton = document.querySelector('.close');
 
 
 
@@ -79,6 +79,32 @@ const renderAllPlayers = (playerList) => {
     }
 };
 
+const renderSinglePlayer = (player) => {
+    try {
+        const template = (
+           `<div class="puppy-details">
+            <button class="close">X</button>
+            <h2>${player.name}</h2>
+            <img src="${player.imageUrl}" height="60%" width="30%" alt="">
+            <p>${player.breed}</p>
+            <p>${player.status}</p>`
+        );
+        console.log(template);
+        playerContainer.innerHTML = template;
+    } catch (err){
+        console.error(`uh oh, trouble rendering ${player}!`)
+    }
+}
+
+
+
+playerContainer.addEventListener('click', async e => {
+    if(e.target.matches('.close')) {
+        console.log("close-buton");
+        init();
+    }
+});
+
 playerContainer.addEventListener('click', async e => {
     if(e.target.matches('.details-button')) {
         console.log("click-details");
@@ -86,39 +112,38 @@ playerContainer.addEventListener('click', async e => {
         const id = e.target.dataset.id;
         console.log(id);
         const player = await fetchSinglePlayer(id);
+        renderSinglePlayer(player);
     };
 })
 
 
-const removePlayer = async (playerList) => {
+const removePlayer = async (playerId) => {
     try {
-        const response = await fetch(`${APIURL}/${player.id}`);
-        const result = await response.json();
-        console.log(result.data.player.id);
-    //    const response = await fetch(`${APIURL}/${playerId}`, {
-    //     method: 'DELETE',
-    //    }
-    //    );
-    //     const result = await response.json();
-    //     console.log(result);
-    //             init();
+        const response = await fetch(`${APIURL}/${playerId}`, {
+            method: 'DELETE',
+        });
+        const data = await response.json();
+        console.log(data.data.player.id);
+        init();
             }
      catch (err) {
         console.error(
-            `Whoops, trouble removing player from the roster!`,
+            `Whoops, trouble removing player ${playerId} from the roster!`,
             err
         );
 };
 }
 
-// playerContainer.addEventListener('click', async (e) => {
-//     if(e.target.matches('.delete-button')) {
-//         console.log("click-delete");
-//         const name = e.target.player.name;
-//         console.log(name);
-//         //removePlayer();
-//         }
-//     })
+playerContainer.addEventListener('click', async (e) => {
+    if(e.target.matches('.delete-button')) {
+        console.log("click-delete");
+        console.log(e.target);
+        const id = e.target.dataset.id;
+        console.log(id);
+        init();
+        await removePlayer(id);
+        }
+    })
 
 
 /**

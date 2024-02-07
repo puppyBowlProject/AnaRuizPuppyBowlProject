@@ -1,4 +1,5 @@
 *{  
+    font-family: Arial, Helvetica, sans-serif;
     background-color:snow;
     padding: 0;
     margin: 0;
@@ -18,4 +19,12 @@
 
 .playerImg {
   width: 60%;
+}
+
+.puppy-details {
+  display: grid;
+  place-items: center;
+  font-size: x-large;
+  font-weight: 300;
+  font-family: Arial, Helvetica, sans-serif;
 }
